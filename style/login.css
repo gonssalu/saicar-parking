@@ -1,0 +1,42 @@
+form{
+    width: 350px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+/* Posicionamento do Logótipo */
+#logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2em;
+    margin-top: 5em;
+}
+
+/*Fazer o body ocupar a página toda*/
+body, html{
+    height: 100%;
+}
+
+/*Configurações do background */
+body{
+    /* Definir a imagem */
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../imgs/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*Sombra nas labels*/
+label.login-label{
+    font-size: 1.10em;
+    text-shadow: 3px 1px 2px black;
+}
+
+/*Configurações dos alerts*/
+.alert {
+    z-index: 8888 !important;
+    position: fixed;
+    right: 10em;
+    left: 10em;
+    opacity: 0.95;
+}

@@ -1,0 +1,45 @@
+@import url("bootstrap.css");
+.text-lightish{
+    color: #e5e5e5 !important;
+}
+
+/* Centrar o botão */
+#btnLogout{
+    transform: translateY(-2%);
+    margin: 0;
+}
+
+/* Centrar a brand name */
+#navbarLogo{
+    transform: translateY(-2%);
+    margin: 0;
+    margin-right: 10px;
+}
+
+/* Algumas configurações adicionais de design */
+
+.bg-darkest{
+    background-color: #212529 !important;
+}
+
+.jumbotron{
+    padding: 1.75rem 1.75rem !important;
+}
+
+html{
+    zoom: 90%;
+}
+
+.bg-darkish{
+    background-color: #444a50 !important;
+}
+
+.btn-outline-light#btnLogout:hover {
+    color: #fff;
+    background-color: #c97008;
+    border-color: #c97008;
+  }
+
+.jumbotron{
+    border-radius: 0px !important;
+}

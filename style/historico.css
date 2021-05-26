@@ -1,0 +1,55 @@
+/* Tabela do boostrap em dark mode */
+
+.table .thead-darkest th{
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+#table-history.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.125);
+}
+
+#table-history.table-striped tbody tr {
+    background-color: rgba(0, 0, 0, 0.05);
+    font-size: 1em;
+}
+
+#table-history tbody tr:hover{
+    background-color: rgba(255, 255, 255, 0.075) !important;
+}
+
+#table-history {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-top-left-radius: 0.8em;
+    border-top-right-radius: 0.8em;
+    border-bottom-left-radius: 0.8em;
+    border-bottom-right-radius: 0.8em;
+}
+
+#table-history thead {
+    text-align: center;
+}
+
+/* borda canto superior-esquerdo */
+#table-history tr:first-child th:first-child {
+    border-top-left-radius: 0.8em;
+}
+
+/* borda canto superior-direito */
+#table-history tr:first-child th:last-child {
+    border-top-right-radius: 0.8em;
+}
+
+/* borda canto inferior-esquerdo */
+#table-history tr:last-child td:first-child {
+    border-bottom-left-radius: 0.8em;
+}
+
+/* borda canto inferior-direito */
+#table-history tr:last-child td:last-child {
+    border-bottom-right-radius: 0.8em;
+}
+
+#table-history tr{
+    text-align: center;
+}

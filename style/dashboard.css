@@ -1,0 +1,27 @@
+/* CSS extra para os cards do bootstrap */
+
+.bg-dark.card{
+    border: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+.bg-dark.card-header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.125) !important;
+    position: relative;
+}
+
+.bg-dark.card-footer{
+    border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.125) !important;
+}
+
+.card-header .badge{
+    padding: 0.6em;
+    top: 23%;
+}
+
+.card-header a{
+    position: absolute;
+    z-index: 10;
+    right: 1em;
+}
