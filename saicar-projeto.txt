@@ -1,0 +1,29 @@
+Server IP: 192.168.0.1
+
+WPA2-PSK: GG_541c0
+
+
+Os portõees abrem ao mesmo tempo
+As luzes acendem-se ao mesmo tempo
+As imagens são no mesmo local
+
+
+Sensor CO: 192.168.0.10
+Sensor CO2: 192.168.0.11
+Sensor Temperatura: 192.168.0.12
+AC Unit: 192.168.0.13
+Sensor Fogo: 192.168.0.14
+Fire Sprinkler: 192.168.0.15
+Luz 1: 192.168.0.16
+Luz 2: 192.168.0.17
+Porta entrada: 192.168.0.18
+Porta saída: 192.168.0.19
+Sensor entrada: 192.168.0.20
+Sensor saída: 192.168.0.21
+
+
+CO2 alarm: 10.000ppm (1%)
+CO alarm: 70ppm (0,007%)
+
+AC:
+	Reduces temperature by 10c per hour, and humidty by 2%
