@@ -93,8 +93,13 @@
                 }
               }else if($nome=="co2"){
                 //Mostrar aviso caso os valores de co2 estejam altos
-                if($valor>30){
+                if($valor>7000){
                   $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Valores de CO2 muito altos!"><span class="badge badge-pill badge-danger"><i class="fas fa-biohazard fa-lg"></i></span></a>';
+                }
+              }else if($nome=="co"){
+                //Mostrar aviso caso os valores de co2 estejam altos
+                if($valor>50){
+                  $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo de Morte: Valores de CO muito altos!"><span class="badge badge-pill badge-danger"><i class="fas fa-skull-crossbones fa-lg"></i></span></a>';
                 }
               }else if($nome=="lotacao"){
                 //Mostrar informações sobre a lotação

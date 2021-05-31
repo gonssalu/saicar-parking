@@ -22,8 +22,8 @@ Sensor entrada: 192.168.0.20
 Sensor saída: 192.168.0.21
 
 
-CO2 alarm: 10.000ppm (1%)
-CO alarm: 70ppm (0,007%)
+CO2 alarm: 10.000ppm (1%) / 7.000 ppm 0,7%
+CO alarm: 70ppm (0,007%) / 50ppm 0,005%
 
 AC:
 	Reduces temperature by 10c per hour, and humidty by 2%

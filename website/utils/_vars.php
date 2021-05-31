@@ -24,6 +24,11 @@ $sensores = array(
         "simbolo" => "ppm"
     ],
 
+    "co" => [
+        "icon" => "fas fa-radiation-alt",
+        "simbolo" => "ppm"
+    ],
+
     "lotacao" => [
         "icon" => "fas fa-car",
         "simbolo" => "/".$LOTACAO_MAX
