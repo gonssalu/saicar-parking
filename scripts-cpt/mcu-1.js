@@ -25,6 +25,49 @@ function getFromAPI(nome){
 	});
 }
 
+//Obter os valores dos sensores e enviá-los à API
+function postAllDataToApi(){
+	//Sensor de temperatura
+	var temperatura = lerTemperatura();
+	postToAPI("temperatura", temperatura);
+
+	//Sensor de CO2
+	var valorCO2 = percToPpm(customRead(CO2_SLOT));
+	postToAPI("co2", valorCO2);
+	
+	//Sensor de CO
+	var valorCO = percToPpm(customRead(COD_SLOT));
+	postToAPI("co", valorCO);
+}
+
+//Obter o estado dos atuadores da API
+function getAllDataFromAPI(){
+	//Luzes
+	var estado;
+	for(var el in LIGHT_SLOTS) {
+		estado = getFromAPI("luz");
+		switch(estado){
+			case "ON":
+				estado = 2;
+			case "OFF":
+				estado = 0;
+		}
+		customWrite(el, estado);
+	}
+	
+	//AC
+	estado = getFromAPI("ar_condicionado");
+	switch(estado){
+		case "ALTO":
+			estado = 2;
+		case "BAIXO":
+			estado = 1;
+		case "OFF":
+			estado = 0;
+	}
+	customWrite(AC_SLOT, estado);
+}
+
 //Obter a temperatura a partir do sensor
 function lerTemperatura() {
 	var temp = analogRead(TEMP_SLOT);
@@ -33,10 +76,15 @@ function lerTemperatura() {
 	return temp.toFixed(2);
 }
 
+//Converter percentagem em ppm (part-per-milion)
+function percToPpm(perc){
+	return (perc*10000.0).toFixed(0);
+}
+
 function setup() {
-	LIGHT_SLOTS.foreach(function(el) {
-    	pinMode(el, OUTPUT);
-	});
+	for(var el in LIGHT_SLOTS) {
+		pinMode(el, OUTPUT);
+	}
 	pinMode(AC_SLOT, OUTPUT);
 	
 	pinMode(COD_SLOT, INPUT);
@@ -45,4 +93,9 @@ function setup() {
 }
 
 function loop() {
+	postAllDataToApi();
+	getAllDataFromAPI();
+
+	//Executar a cada 5 segundos
+	delay(5000);
 }
