@@ -13,15 +13,37 @@ function postToAPI(nome, valor){
     RealHTTPClient.post(API_URL, valores);
 }
 
-//variavel temporaria utilizada para obter o output da funcao getFromAPI
-var temp_var = 0;
-
 //Obter os dados de um atuador da API
-function getFromAPI(nome){
+function getFromAPI(nome, slot){
     RealHTTPClient.get(API_URL+"?nome="+nome, function(status, data){
 		Serial.println(status + " : " + data);
-        if(status==200)
-            temp_var=data;
+        if(status==200){
+        	var estado=data;
+        	if(nome=="ar_condicionado"){
+        		switch(estado){
+				case "ALTO":
+					estado = 2;
+					break;
+				case "BAIXO":
+					estado = 1;
+					break;
+				case "OFF":
+					estado = 0;
+					break;
+				}
+				customWrite(slot, estado);
+        	}else if(nome=="luz"){
+        		switch(estado){
+					case "ON":
+						estado = HIGH;
+						break;
+					case "OFF":
+						estado = LOW;
+						break;
+				}
+				digitalWrite(slot, estado);
+        	}
+        }
 	});
 }
 
@@ -43,29 +65,12 @@ function postAllDataToApi(){
 //Obter o estado dos atuadores da API
 function getAllDataFromAPI(){
 	//Luzes
-	var estado;
 	for(var el in LIGHT_SLOTS) {
-		estado = getFromAPI("luz");
-		switch(estado){
-			case "ON":
-				estado = 2;
-			case "OFF":
-				estado = 0;
-		}
-		customWrite(el, estado);
+		getFromAPI("luz", LIGHT_SLOTS[el]);
 	}
 	
 	//AC
-	estado = getFromAPI("ar_condicionado");
-	switch(estado){
-		case "ALTO":
-			estado = 2;
-		case "BAIXO":
-			estado = 1;
-		case "OFF":
-			estado = 0;
-	}
-	customWrite(AC_SLOT, estado);
+	getFromAPI("ar_condicionado", AC_SLOT);
 }
 
 //Obter a temperatura a partir do sensor
@@ -83,7 +88,7 @@ function percToPpm(perc){
 
 function setup() {
 	for(var el in LIGHT_SLOTS) {
-		pinMode(el, OUTPUT);
+		pinMode(LIGHT_SLOTS[el], OUTPUT);
 	}
 	pinMode(AC_SLOT, OUTPUT);
 	
