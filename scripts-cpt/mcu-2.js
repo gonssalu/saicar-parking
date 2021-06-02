@@ -3,6 +3,9 @@ var FS_SLOT = 1;
 
 var API_URL = "http://127.0.0.1/api/api.php";
 
+//Timestamp da última sincronização com a API
+var lastAPIUpdate = 0;
+
 //Enviar os dados de um sensor/atuador à API
 function postToAPI(nome, valor){
     var valores = {'nome': nome,'valor': valor};
@@ -24,11 +27,14 @@ function loop() {
         customWrite(FS_SLOT, '1')
 	}
 
-	Serial.println(value);
+	var dateNow = new Date().getTime();
 
-	postToAPI("fogo_mon", value);
-	postToAPI("sprinkler", value);
+	//Se já passaram 5 segundos desde a última sincronização com a API...
+	if(dateNow-lastAPIUpdate>=5000){
+		postToAPI("fogo_mon", value);
+		postToAPI("sprinkler", value);
+		lastAPIUpdate=dateNow;
+	}
 
 	//TODO: Sprinkler controlo do dashboard
-	delay(1000);
 }

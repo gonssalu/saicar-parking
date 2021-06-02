@@ -27,5 +27,7 @@ CO alarm: 70ppm (0,007%) / 50ppm 0,005%
 
 AC:
 	Reduces temperature by 10c per hour, and humidty by 2%
-	
-DOCS: variavel temporaria utilizada para obter o output da funcao getFromAPI
+
+SBU: Quando controlam MCU
+
+TODO: Variaveis que vao mudando no enviroment
