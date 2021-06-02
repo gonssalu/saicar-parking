@@ -30,4 +30,7 @@ AC:
 
 SBU: Quando controlam MCU
 
-TODO: Variaveis que vao mudando no enviroment
+TODO: Sprinkler controlo do dashboard
+
+TODO-LATER: Variaveis que vao mudando no enviroment
+TODO-LATER: Configurar IPs
