@@ -31,10 +31,12 @@ function loop() {
 
 	//Se já passaram 5 segundos desde a última sincronização com a API...
 	if(dateNow-lastAPIUpdate>=5000){
-		postToAPI("fogo_mon", value);
-		postToAPI("sprinkler", value);
+		if(value==0){
+			postToAPI("fogo", "NÃO");
+		}else{
+			postToAPI("fogo", "SIM");
+		}
+		//postToAPI("sprinkler", value);
 		lastAPIUpdate=dateNow;
 	}
-
-	//TODO: Sprinkler controlo do dashboard
 }

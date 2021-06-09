@@ -32,6 +32,11 @@ $sensores = array(
     "lotacao" => [
         "icon" => "fas fa-car",
         "simbolo" => "/".$LOTACAO_MAX
+    ],
+
+    "fogo" => [
+        "icon" => "fas fa-fire-alt",
+        "simbolo" => ""
     ]
 );
 
