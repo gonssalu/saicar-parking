@@ -29,11 +29,31 @@
   <nav class="navbar navbar-expand-sm navbar-dark bg-darkest">
       <a class="navbar-brand" id="navbarLogo" href="#">Saicar Parking</a>
       <ul class="navbar-nav">
-          <li class="nav-item active">
-          <a class="nav-link" href="dashboard.php">Home</a>
-          </li>
+          <?php 
+            if(!isset($_GET['atuadores'])){
+              echo '
+              <li class="nav-item active">
+              <a class="nav-link" href="dashboard.php">Sensores</a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="dashboard.php?atuadores">Atuadores</a>
+              </li>';
+            }else{
+              echo '
+              <li class="nav-item">
+              <a class="nav-link" href="dashboard.php">Sensores</a>
+              </li>
+              <li class="nav-item active">
+              <a class="nav-link" href="dashboard.php?atuadores">Atuadores</a>
+              </li>';
+            }
+          ?>
+          
           <li class="nav-item">
           <a class="nav-link" href="historico.php">Histórico</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="webcam.php">Webcam</a>
           </li>
       </ul>
       <form class="ml-auto" action="logout.php">
@@ -47,109 +67,109 @@
   <div class="container">
           <?php
 
-            //Mostrar todos os sensores e toggles
+            //Mostrar os sensores/atuadores
             $count = 0;
             echo '<div class="row">';
 
-            //Percorrer todos os sensores
-            foreach ($sensores as $nome => $sensor){
-              $count++;
-              //Para manter 3 sensores/toggles por linha, a cada sensor múltiplo de 4, mudar para a próxima linha.
-              if(($count-1)%3==0){
-                echo '</div><div class="row mt-4">';
+            if(!isset($_GET['atuadores'])){
+              //Percorrer todos os sensores
+              foreach ($sensores as $nome => $sensor){
+                $count++;
+                //Para manter 3 sensores/toggles por linha, a cada sensor múltiplo de 4, mudar para a próxima linha.
+                if(($count-1)%3==0){
+                  echo '</div><div class="row mt-4">';
+                }
+                
+                //Obter os dados da API
+                $valor = file_get_contents("api/files/".$nome."/valor.txt");
+                $hora = file_get_contents("api/files/".$nome."/hora.txt");
+                $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
+                
+                $icon = $sensor["icon"];
+
+                
+                
+
+                //Caso o seja o sensor de temperatura realizar a mudança de icon conforme a temperatura
+                //   e efetuar as condições para determinar se é necessário mostrar um aviso
+                $aviso="";
+                if($nome=="temperatura"){
+                  if($valor<=0){
+                    $icon.="empty";
+                  }else if($valor<=10){
+                    $icon.="quarter";
+                  }else if($valor<=20){
+                    $icon.="half";
+                  }else if($valor<=30){
+                    $icon.="three-quarters";
+                  }else{
+                    $icon.="full";
+                  }
+
+                  //Mostrar aviso de temperatura baixa e alta
+                  if($valor<0){
+                    $aviso = '<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Temperatura muito baixa!"><span class="badge badge-pill badge-danger"><i class="fas fa-temperature-low fa-lg"></i></span></a>';
+                  }else if($valor>30){
+                    $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Temperatura muito alta!"><span class="badge badge-pill badge-danger"><i class="fas fa-temperature-high fa-lg"></i></span></a>';
+                  }
+                }else if($nome=="co2"){
+                  //Mostrar aviso caso os valores de co2 estejam altos
+                  if($valor>7000){
+                    $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Valores de CO2 muito altos!"><span class="badge badge-pill badge-danger"><i class="fas fa-biohazard fa-lg"></i></span></a>';
+                  }
+                }else if($nome=="co"){
+                  //Mostrar aviso caso os valores de co2 estejam altos
+                  if($valor>50){
+                    $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo de Morte: Valores de CO muito altos!"><span class="badge badge-pill badge-danger"><i class="fas fa-skull-crossbones fa-lg"></i></span></a>';
+                  }
+                }else if($nome=="lotacao"){
+                  //Mostrar informações sobre a lotação
+                  if($valor==0){
+                    $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Estacionamento vazio."><span class="badge badge-pill badge-success"><i class="far fa-dot-circle fa-lg"></i></span></a>';
+                  }else if($valor==$LOTACAO_MAX){
+                    $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Estacionamento lotado."><span class="badge badge-pill badge-warning"><i class="fas fa-dot-circle fa-lg"></i></span></a>';
+                  }else if($valor>$LOTACAO_MAX){
+                    $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Lotação excedida!"><span class="badge badge-pill badge-danger"><i class="fas fa-exclamation-circle fa-lg"></i></span></a>';
+                  }
+                }
+
+                //Mostrar os dados do sensor
+                echo '              <div class="col-sm-4">
+                <div class="card bg-dark text-center text-light">
+                  <div class="bg-dark card-header"><b>'.$descricao.': '.$valor.$sensor["simbolo"].'</b>'.$aviso.'</div>
+                  <div class="card-body"><i class="'.$icon.' fa-7x"></i></div>
+                  <div class="bg-dark card-footer">Atualização: '.$hora.' - <a href="historico.php?nome='.$nome.'">Histórico</a></div>
+                </div>
+                </div>';
+                
               }
-              
-              //Obter os dados da API
-              $valor = file_get_contents("api/files/".$nome."/valor.txt");
-              $hora = file_get_contents("api/files/".$nome."/hora.txt");
-              $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
-              
-              $icon = $sensor["icon"];
+            }else{
+              //Percorrer todos os toggles
+              foreach ($toggles as $nome => $toggle){
+                $count++;
+                //Para manter 3 sensores/toggles por linha, a cada toggle múltiplo de 4, mudar para a próxima linha.
+                if(($count-1)%3==0){
+                  echo '</div><div class="row mt-4">';
+                }
+                
+                //Obter os dados da API
+                $valor = file_get_contents("api/files/".$nome."/valor.txt");
+                $hora = file_get_contents("api/files/".$nome."/hora.txt");
+                $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
+                
+                $icon = $toggle["valores"][$valor];
 
-              
-              
-
-              //Caso o seja o sensor de temperatura realizar a mudança de icon conforme a temperatura
-              //   e efetuar as condições para determinar se é necessário mostrar um aviso
-              $aviso="";
-              if($nome=="temperatura"){
-                if($valor<=0){
-                  $icon.="empty";
-                }else if($valor<=10){
-                  $icon.="quarter";
-                }else if($valor<=20){
-                  $icon.="half";
-                }else if($valor<=30){
-                  $icon.="three-quarters";
-                }else{
-                  $icon.="full";
-                }
-
-                //Mostrar aviso de temperatura baixa e alta
-                if($valor<0){
-                  $aviso = '<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Temperatura muito baixa!"><span class="badge badge-pill badge-danger"><i class="fas fa-temperature-low fa-lg"></i></span></a>';
-                }else if($valor>30){
-                  $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Temperatura muito alta!"><span class="badge badge-pill badge-danger"><i class="fas fa-temperature-high fa-lg"></i></span></a>';
-                }
-              }else if($nome=="co2"){
-                //Mostrar aviso caso os valores de co2 estejam altos
-                if($valor>7000){
-                  $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Valores de CO2 muito altos!"><span class="badge badge-pill badge-danger"><i class="fas fa-biohazard fa-lg"></i></span></a>';
-                }
-              }else if($nome=="co"){
-                //Mostrar aviso caso os valores de co2 estejam altos
-                if($valor>50){
-                  $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo de Morte: Valores de CO muito altos!"><span class="badge badge-pill badge-danger"><i class="fas fa-skull-crossbones fa-lg"></i></span></a>';
-                }
-              }else if($nome=="lotacao"){
-                //Mostrar informações sobre a lotação
-                if($valor==0){
-                  $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Estacionamento vazio."><span class="badge badge-pill badge-success"><i class="far fa-dot-circle fa-lg"></i></span></a>';
-                }else if($valor==$LOTACAO_MAX){
-                  $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Estacionamento lotado."><span class="badge badge-pill badge-warning"><i class="fas fa-dot-circle fa-lg"></i></span></a>';
-                }else if($valor>$LOTACAO_MAX){
-                  $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Lotação excedida!"><span class="badge badge-pill badge-danger"><i class="fas fa-exclamation-circle fa-lg"></i></span></a>';
-                }
+                //Mostrar os dados do sensor
+                echo '              <div class="col-sm-4">
+                <div class="card bg-dark text-center text-light">
+                  <div class="bg-dark card-header"><b>'.$descricao.': '.$valor.'</b></div>
+                  <div class="card-body"><i class="'.$icon.' fa-7x"></i></div>
+                  <div class="bg-dark card-footer">Atualização: '.$hora.' - <a href="historico.php?nome='.$nome.'">Histórico</a></div>
+                </div>
+                </div>';
+                
               }
-
-              //Mostrar os dados do sensor
-              echo '              <div class="col-sm-4">
-              <div class="card bg-dark text-center text-light">
-                <div class="bg-dark card-header"><b>'.$descricao.': '.$valor.$sensor["simbolo"].'</b>'.$aviso.'</div>
-                <div class="card-body"><i class="'.$icon.' fa-7x"></i></div>
-                <div class="bg-dark card-footer">Atualização: '.$hora.' - <a href="historico.php?nome='.$nome.'">Histórico</a></div>
-              </div>
-              </div>';
-              
             }
-
-            //Percorrer todos os toggles
-            foreach ($toggles as $nome => $toggle){
-              $count++;
-              //Para manter 3 sensores/toggles por linha, a cada toggle múltiplo de 4, mudar para a próxima linha.
-              if(($count-1)%3==0){
-                echo '</div><div class="row mt-4">';
-              }
-              
-              //Obter os dados da API
-              $valor = file_get_contents("api/files/".$nome."/valor.txt");
-              $hora = file_get_contents("api/files/".$nome."/hora.txt");
-              $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
-              
-              $icon = $toggle["valores"][$valor];
-
-              //Mostrar os dados do sensor
-              echo '              <div class="col-sm-4">
-              <div class="card bg-dark text-center text-light">
-                <div class="bg-dark card-header"><b>'.$descricao.': '.$valor.'</b></div>
-                <div class="card-body"><i class="'.$icon.' fa-7x"></i></div>
-                <div class="bg-dark card-footer">Atualização: '.$hora.' - <a href="historico.php?nome='.$nome.'">Histórico</a></div>
-              </div>
-              </div>';
-              
-            }
-
-
 
             echo '</div>';
           ?>

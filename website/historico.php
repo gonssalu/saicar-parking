@@ -73,10 +73,16 @@
         <a class="navbar-brand" id="navbarLogo" href="dashboard.php">Saicar Parking</a>
         <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link" href="dashboard.php">Home</a>
+            <a class="nav-link" href="dashboard.php">Sensores</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="dashboard.php?atuadores">Atuadores</a>
             </li>
             <li class="nav-item active">
             <a class="nav-link" href="historico.php">Histórico</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="webcam.php">Webcam</a>
             </li>
         </ul>
         <form class="ml-auto" action="logout.php">
