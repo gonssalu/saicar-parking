@@ -16,6 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5"> <!-- A página atualizará sozinha a cada 5 segundos -->
     
     <!-- Ficheiros CSS -->
     <?php
@@ -51,6 +52,34 @@
       <p><?php echo date("H:i:s");?></p>
   </div>  
   <div class="container">
+
+    <div class="row">
+      <div class="col-8 offset-2">
+        <img src="
+        <?php 
+          //Mostrar a imagem default caso não exista um live feed
+          $loc = "api/files/webcam/webcam.jpg";
+          $nosignalLoc = "imgs/no-signal.jpg";
+          if(file_exists($loc)){
+            //Caso o ficheiro não tenha sido alterado há mais de 15 segundos, o live-feed parou e já não é necessário mostrar a última frame
+            $chtime = filectime($loc);
+            //Se não ocorreu um erro, continuar
+            if($chtime){
+              if(time()>$chtime+15){
+                echo $nosignalLoc;
+              }else{
+                echo $loc;
+              }
+            }else{
+              //se ocorrer um erro, assumir que o live-feed ainda está on
+              echo $loc;
+            }
+          }else
+            echo $nosignalLoc;
+        ?>
+        " id="imagem-webcam"/>
+      </div> 
+    </div>
 
   </div>
 

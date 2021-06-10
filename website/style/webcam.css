@@ -1,3 +1,10 @@
 .jumbotron p{
     font-size: 1.15em;
 }
+
+#imagem-webcam{
+    width: 100%;
+    min-width: 100%;
+    min-height: 60vh;
+    max-height: 60vh;
+}

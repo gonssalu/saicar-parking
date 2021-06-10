@@ -2,6 +2,7 @@ import cv2 as cv
 from time import time
 import _thread
 import requests
+import os
 #camera = cv.VideoCapture(1)
 camera = cv.VideoCapture('http://192.168.0.17:4747/video')
 
@@ -39,3 +40,4 @@ except KeyboardInterrupt: # caso haja interrupção de teclado CTRL+C
     print( "Programa terminado pelo utilizador")
     camera.release()
     cv.destroyAllWindows()
+    os.remove("webcam.jpg")
