@@ -30,6 +30,8 @@ AC:
 
 SBU: Quando controlam MCU
 
+SCRIPT WEBCAM ESTA PROGRAMADO PARA UTILIZAR O DROIDCAM!!!!
+
 TODO: Sprinkler controlo do dashboard
 
 TODO-LATER: Variaveis que vao mudando no enviroment
