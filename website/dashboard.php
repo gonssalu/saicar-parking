@@ -93,6 +93,7 @@
                 //Caso o seja o sensor de temperatura realizar a mudança de icon conforme a temperatura
                 //   e efetuar as condições para determinar se é necessário mostrar um aviso
                 $aviso="";
+                $valueTags=""; //caso sejam necessárias algumas tags extra no value
                 if($nome=="temperatura"){
                   if($valor<=0){
                     $icon.="empty";
@@ -131,12 +132,25 @@
                   }else if($valor>$LOTACAO_MAX){
                     $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Lotação excedida!"><span class="badge badge-pill badge-danger"><i class="fas fa-exclamation-circle fa-lg"></i></span></a>';
                   }
+                }else if($nome=="humidade"){
+                  //Mostrar aviso de humidade baixa e alta
+                  if($valor<30){
+                    $aviso = '<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Humidade muito baixa!"><span class="badge badge-pill badge-danger"><i class="far fa-dot-circle fa-lg"></i></span></a>';
+                  }else if($valor>80){
+                    $aviso='<a data-toggle="tooltip" data-placement="bottom" title="Perigo: Humidade muito alta!"><span class="badge badge-pill badge-danger"><i class="fas fa-dot-circle fa-lg"></i></span></a>';
+                  }
+                }else if($nome=="fogo"){
+                  if($valor=="NÃO"){
+                    $valueTags="text-success";
+                  }else if($valor=="SIM"){
+                    $valueTags="text-danger";
+                  }
                 }
-
+                $valueTags=($valueTags!=""?'</b><b class="'.$valueTags.'">':'');
                 //Mostrar os dados do sensor
                 echo '              <div class="col-sm-4">
                 <div class="card bg-dark text-center text-light">
-                  <div class="bg-dark card-header"><b>'.$descricao.': '.$valor.$sensor["simbolo"].'</b>'.$aviso.'</div>
+                  <div class="bg-dark card-header"><b>'.$descricao.': '.$valueTags.$valor.$sensor["simbolo"].'</b>'.$aviso.'</div>
                   <div class="card-body"><i class="'.$icon.' fa-7x"></i></div>
                   <div class="bg-dark card-footer">Atualização: '.$hora.' - <a href="historico.php?nome='.$nome.'">Histórico</a></div>
                 </div>
@@ -159,10 +173,18 @@
                 
                 $icon = $toggle["valores"][$valor];
 
-                //Mostrar os dados do sensor
+                $valueTags="";
+                
+                if($nome=="aspersor"){
+                  if($valor=="ON")
+                    $valueTags="text-blue";
+                }
+
+                $valueTags=($valueTags!=""?'</b><b class="'.$valueTags.'">':'');
+                //Mostrar os dados do atuador
                 echo '              <div class="col-sm-4">
                 <div class="card bg-dark text-center text-light">
-                  <div class="bg-dark card-header"><b>'.$descricao.': '.$valor.'</b></div>
+                  <div class="bg-dark card-header"><b>'.$descricao.': '.$valueTags.$valor.'</b></div>
                   <div class="card-body"><i class="'.$icon.' fa-7x"></i></div>
                   <div class="bg-dark card-footer">Atualização: '.$hora.' - <a href="historico.php?nome='.$nome.'">Histórico</a></div>
                 </div>

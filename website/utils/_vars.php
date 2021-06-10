@@ -34,6 +34,11 @@ $sensores = array(
         "simbolo" => "/".$LOTACAO_MAX
     ],
 
+    "humidade" => [
+        "icon" => "fas fa-tint",
+        "simbolo" => "%"
+    ],
+
     "fogo" => [
         "icon" => "fas fa-fire-alt",
         "simbolo" => ""
@@ -64,6 +69,22 @@ $toggles = array(
         [
             "ABERTO" =>"fas fa-door-open",
             "FECHADO" =>"fas fa-door-closed"
+        ]
+    ],
+
+    "aquecimento" => [
+        "valores" =>
+        [
+            "ON" =>"fas fa-sun",
+            "OFF" =>"far fa-sun"
+        ]
+    ],
+
+    "aspersor" => [
+        "valores" =>
+        [
+            "ON" =>"fas fa-fire-extinguisher",
+            "OFF" =>"fas fa-fire-extinguisher"
         ]
     ]
 );

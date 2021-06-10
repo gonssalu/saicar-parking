@@ -33,10 +33,14 @@ function loop() {
 	if(dateNow-lastAPIUpdate>=5000){
 		if(value==0){
 			postToAPI("fogo", "NÃO");
+			postToAPI("aspersor", "OFF");
 		}else{
 			postToAPI("fogo", "SIM");
+			postToAPI("aspersor", "ON");
 		}
 		//postToAPI("sprinkler", value);
 		lastAPIUpdate=dateNow;
 	}
+
+	//TODO: Sprinkler controlo do dashboard
 }

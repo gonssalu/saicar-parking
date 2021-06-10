@@ -25,3 +25,7 @@
     z-index: 10;
     right: 1em;
 }
+
+.text-blue{
+    color: var(--blue) !important;
+}

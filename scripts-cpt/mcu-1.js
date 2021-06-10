@@ -1,9 +1,11 @@
 var TEMP_SLOT = A0;
+var HUMI_SLOT = A1;
 var COD_SLOT = 0;
 var CO2_SLOT = 1;
 
 var LIGHT_SLOTS = [2, 3];
 var AC_SLOT = 4;
+var HEAT_SLOT = 5;
 
 var API_URL = "http://127.0.0.1/api/api.php";
 
@@ -42,7 +44,17 @@ function getFromAPI(nome, slot){
 						break;
 				}
 				digitalWrite(slot, estado);
-        	}
+        	}else if(nome=="aquecimento"){
+				switch(estado){
+					case "ON":
+						estado = HIGH;
+						break;
+					case "OFF":
+						estado = LOW;
+						break;
+				}
+				digitalWrite(slot, estado);
+			}
         }
 	});
 }
@@ -52,6 +64,10 @@ function postAllDataToApi(){
 	//Sensor de temperatura
 	var temperatura = lerTemperatura();
 	postToAPI("temperatura", temperatura);
+
+	//Sensor de humidade
+	var humidade = lerHumidade();
+	postToAPI("humidade", humidade);
 
 	//Sensor de CO2
 	var valorCO2 = percToPpm(customRead(CO2_SLOT));
@@ -71,6 +87,9 @@ function getAllDataFromAPI(){
 	
 	//AC
 	getFromAPI("ar_condicionado", AC_SLOT);
+
+	//AC
+	getFromAPI("aquecimento", HEAT_SLOT);
 }
 
 //Obter a temperatura a partir do sensor
@@ -79,6 +98,13 @@ function lerTemperatura() {
 	temp = temp*200/1023.0;
 	temp = -100+temp;
 	return temp.toFixed(2);
+}
+
+//Obter a humidade a partir do sensor
+function lerHumidade() {
+	var humi = analogRead(HUMI_SLOT);
+	humi = humi*100/1020.0; //1020 torna os resultados mais precisos
+	return humi.toFixed(1);
 }
 
 //Converter percentagem em ppm (part-per-milion)
@@ -91,10 +117,12 @@ function setup() {
 		pinMode(LIGHT_SLOTS[el], OUTPUT);
 	}
 	pinMode(AC_SLOT, OUTPUT);
+	pinMode(HEAT_SLOT, OUTPUT);
 	
 	pinMode(COD_SLOT, INPUT);
 	pinMode(CO2_SLOT, INPUT);
 	pinMode(TEMP_SLOT, INPUT);
+	pinMode(HUMI_SLOT, INPUT);
 }
 
 function loop() {
