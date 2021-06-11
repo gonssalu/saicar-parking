@@ -55,13 +55,21 @@
           <li class="nav-item">
           <a class="nav-link" href="webcam.php">Webcam</a>
           </li>
+          <li class="nav-item">
+          <a class="nav-link" href="painel.php">Painel de Controlo</a>
+          </li>
       </ul>
       <form class="ml-auto" action="logout.php">
           <button class="btn btn-outline-light float-right" id="btnLogout" type="submit"><i class="fas fa-sign-out-alt"></i></button>
       </form>
   </nav>
-  <div class="jumbotron text-center bg-darkest text-light">
-      <h1>Dashboard</h1>
+  <div class="jumbotron-dash text-center bg-darkest text-light">
+      <h1><?php
+        if(!isset($_GET['atuadores']))
+          echo "Sensores";
+        else
+          echo "Atuadores";
+      ?></h1>
       <p>Gonçalo Paulino & Rafael Tavares - Última atualização: <?php echo date("H:i");?></p>
   </div>  
   <div class="container">

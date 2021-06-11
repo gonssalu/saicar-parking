@@ -84,6 +84,9 @@
             <li class="nav-item">
             <a class="nav-link" href="webcam.php">Webcam</a>
             </li>
+            <li class="nav-item">
+            <a class="nav-link" href="painel.php">Painel de Controlo</a>
+            </li>
         </ul>
         <form class="ml-auto" action="logout.php">
             <button class="btn btn-outline-light float-right" id="btnLogout" type="submit"><i class="fas fa-sign-out-alt"></i></button>
@@ -153,10 +156,14 @@
         <?php 
             //Caso seja o histórico individual inserir um botão de voltar atrás
             if($existeNome){
+                $extra = "";
+                if(array_key_exists($nome, $toggles))
+                    $extra = "atuadores";
+
                 echo '<div class="row">
                 <div class="col-sm-10 offset-1">
-                    <form action="dashboard.php">
-                        <button type="submit" class="btn btn-dark btn-block"><i class="fas fa-arrow-circle-left"></i> &nbsp;Voltar atrás</button>
+                    <form method="GET" action="dashboard.php">
+                        <button type="submit" name="'.$extra.'" class="btn btn-dark btn-block"><i class="fas fa-arrow-circle-left"></i> &nbsp;Voltar atrás</button>
                     </form>
                 </div>
             </div>';

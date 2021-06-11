@@ -29,3 +29,9 @@
 .text-blue{
     color: var(--blue) !important;
 }
+
+.jumbotron-dash{
+    margin-bottom: 1rem !important;
+    padding: 1.75rem 1.75rem !important;
+    border-radius: 0px !important;
+}

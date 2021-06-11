@@ -42,6 +42,9 @@
         <li class="nav-item active">
         <a class="nav-link" href="webcam.php">Webcam</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" href="painel.php">Painel de Controlo</a>
+        </li>
       </ul>
       <form class="ml-auto" action="logout.php">
           <button class="btn btn-outline-light float-right" id="btnLogout" type="submit"><i class="fas fa-sign-out-alt"></i></button>

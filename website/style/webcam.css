@@ -7,4 +7,6 @@
     min-width: 100%;
     min-height: 60vh;
     max-height: 60vh;
+    border: 2px solid var(--light) !important;
+    border-radius: 0.8em;
 }
