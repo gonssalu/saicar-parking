@@ -89,7 +89,8 @@
                         <?php
                             //Percorrer os toggles todos
                             foreach ($toggles as $nome => $toggle){
-                
+                                if($nome=="aspersor")
+                                    continue;
                                 $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
                                 
                                 $estado = file_get_contents("http://127.0.0.1/api/api.php?nome=".$nome);
