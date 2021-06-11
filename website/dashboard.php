@@ -95,9 +95,6 @@
                 
                 $icon = $sensor["icon"];
 
-                
-                
-
                 //Caso o seja o sensor de temperatura realizar a mudança de icon conforme a temperatura
                 //   e efetuar as condições para determinar se é necessário mostrar um aviso
                 $aviso="";

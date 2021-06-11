@@ -42,3 +42,6 @@ TODO: Sprinkler controlo do dashboard
 
 TODO-LATER: Variaveis que vao mudando no enviroment
 TODO-LATER: Configurar IPs
+
+
+explicar as variaveis das arrays

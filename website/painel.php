@@ -9,7 +9,25 @@
     header("refresh:0;url=index.php"); //se não, redirecionar para a página de login
     die("Acesso restrito.");
   }
-  
+
+  //Informar a API da alteração
+  $erro=false;
+  if(isset($_POST['toggle']) && isset($_POST['state'])){
+    $url = 'http://127.0.0.1/api/api.php';
+    $data = array('nome' => $_POST['toggle'], 'valor' => $_POST['state']);
+    
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    if ($result === FALSE) { $erro=true; }
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -21,6 +39,10 @@
     <?php
       include('utils/_css.html');
     ?>
+
+    <link rel="stylesheet" href="style/painel.css">
+     <!-- Utilizar a mesma tabela do historico -->
+    <link rel="stylesheet" href="style/historico.css">
 
     <title>Plataforma IoT</title>
 </head>
@@ -49,16 +71,61 @@
         </form>
     </nav>
     <div class="jumbotron text-center bg-darkest text-light">
-        <h1>Histórico</h1>      
-        <p>Está visualizando o histórico de </p>
+        <h1>Painel de Controlo</h1>      
+        <p>Bem-vindo, <?php echo $_SESSION[$LOGIN_SESS_VAR]; ?></p>
     </div>
-    <div class="container">
+    <div class="container text-light">
         <div class="row">
+            <div class="col-sm-10 offset-1">
+                <table id="table-history" class="table table-bordered table-striped table-dark table-hover">
+                    <thead class="thead-darkest">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Estado</th>
+                        <th>Controlos</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            //Percorrer os toggles todos
+                            foreach ($toggles as $nome => $toggle){
+                
+                                $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
+                                
+                                $estado = file_get_contents("http://127.0.0.1/api/api.php?nome=".$nome);
+
+                                echo '<tr><td>'.$descricao.'</td><td>'.$estado.'</td>';
+
+                                echo '<td><form id="form'.$nome.'" name="formSubmit" method="POST" />
+                                <input id="toggle'.$nome.'" name="toggle" type="hidden">
+                                <input id="state'.$nome.'" name="state" type="hidden">
+                                <div class="btn-group dropright">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Alterar estado
+                                </button>
+                                <div class="dropdown-menu">';
+                                foreach ($toggle["valores"] as $key => $value){
+                                    echo '<li onclick="$(\'#toggle'.$nome.'\').val(\''.$nome.'\'); $(\'#state'.$nome.'\').val(\''.$key.'\'); $(\'#form'.$nome.'\').submit()"><a class="dropdown-item" href="#">'.$key.'</a></li>';
+                                }
+                                echo '</div>
+                                </div></form></td>';
+                                echo '</tr>';
+                            } 
+                        ?>
+                    </tbody>
+                </table>
             
+            </div>
         </div>
     </div>
-    <br>
 
+    <!--SCRIPTS-->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <?php
+        if($erro)
+            echo "<script>alert('Ocorreu um erro! Por favor tente novamente.');</script>";                       
+    ?>
 
 </body>
 </html>
