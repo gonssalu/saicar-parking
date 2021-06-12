@@ -45,3 +45,4 @@ TODO-LATER: Configurar IPs
 
 
 explicar as variaveis das arrays
+explicar as permissoes
