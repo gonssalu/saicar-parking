@@ -60,6 +60,7 @@
       <div class="col-8 offset-2">
         <img src="
         <?php 
+          $signal=true;
           //Mostrar a imagem default caso não exista um live feed
           $loc = "api/files/webcam/webcam.jpg";
           $nosignalLoc = "imgs/no-signal.jpg";
@@ -69,6 +70,7 @@
             //Se não ocorreu um erro, continuar
             if($chtime){
               if(time()>$chtime+15){
+                $signal=false;
                 echo $nosignalLoc;
               }else{
                 echo $loc;
@@ -77,14 +79,53 @@
               //se ocorrer um erro, assumir que o live-feed ainda está on
               echo $loc;
             }
-          }else
+          }else{
+            $signal=false;
             echo $nosignalLoc;
+          }
         ?>
         " id="imagem-webcam"/>
       </div> 
     </div>
 
+  <?php
+    $bwBtnEn = false;
+    $colorBtnEn = false;
+
+    if($signal){
+      $modo = file_get_contents("api/files/webcam/modo.txt");
+
+      //Ativar o botão do modo oposto ao que está ativo
+      if($modo==0)
+        $colorBtnEn=true;
+      else{
+        $bwBtnEn=true;
+      }
+    }
+
+    $bwBtn = "btn-" . ($bwBtnEn || !$signal ? "dark" : "primary");
+    $colorBtn = "btn-" . ($colorBtnEn || !$signal ? "dark" : "primary");
+    $extraBw = ($bwBtnEn ? "" : "disabled");
+    $extraColor = ($colorBtnEn ? "" : "disabled");
+    echo '<br>
+    <div class="row">
+      <div class="col-4 offset-2">
+        <form method="POST" action="api/cam.php">
+            <input type="hidden" name="modo" value="0"/>
+            <button type="submit" name="btnBw" class="btn '.$bwBtn.' btn-block" '.$extraBw.'><i class="fas fa-tint-slash"></i> &nbsp;Preto e Branco</button>
+        </form>
+      </div>
+      <div class="col-4">
+        <form method="POST" action="api/cam.php">
+            <input type="hidden" name="modo" value="1"/>
+            <button type="submit" name="btnCor" class="btn btn-primary '.$colorBtn.' btn-block" '.$extraColor.'><i class="fas fa-palette"></i> &nbsp;Cores</button>
+        </form>
+      </div>
+    </div>
   </div>
+    ';
+
+  ?>
 
   <!--SCRIPTS-->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
