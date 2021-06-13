@@ -1,6 +1,7 @@
 <?php
 
-    include('../utils/_vars.php');
+    require('../utils/_vars.php');
+    require('../utils/_db.php');
 
     header('Content-Type: text/html; charset=utf-8');
 
@@ -9,25 +10,23 @@
             //Verificar se existe algum elemento com esse nome
             if(array_key_exists($_POST['nome'], $sensores) || array_key_exists($_POST['nome'], $toggles)){
                 $hora = date("Y/m/d H:i");
-                file_put_contents("files/" . $_POST['nome'] . "/valor.txt", $_POST['valor']);
-                file_put_contents("files/" . $_POST['nome'] . "/hora.txt", $hora);
+                put_info_db($_POST['nome'], "valor", $_POST['valor'], $con);
+                put_info_db($_POST['nome'], "hora", $hora, $con);
 
-                //Guardar os conteudos do ficheiro log nesta variavel
-                $log = file_get_contents("files/" . $_POST['nome'] . "/log.txt");
-                //Substituir os conteudos do ficheiro de logs de maneira a que os mais recentes apareção primeiro
-                file_put_contents("files/" . $_POST['nome'] . "/log.txt", $hora.';'.$_POST['valor'].PHP_EOL.$log);
+                echo add_log($_POST['nome'], $_POST['valor'], $hora, $con);
             }else{
+                http_response_code(400);
                 echo "nome invalido";
             }
         }
     }else if($_SERVER['REQUEST_METHOD']=='GET'){
         if(isset($_GET['nome'])){
             //Verificar se existe algum elemento com esse nome
-            if(array_key_exists($_GET['nome'], $sensores) || array_key_exists($_GET['nome'], $toggles)){
-                echo file_get_contents("files/" . $_GET['nome'] . "/valor.txt");
+            if(check_if_exists($_GET['nome'], $con)){
+                echo get_info_db($_GET['nome'], "valor", $con);
             }else{
                 http_response_code(400);
-                echo "nome invalido";
+                echo "nome inválido";
             }
         }else{
             http_response_code(403);

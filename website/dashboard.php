@@ -1,6 +1,7 @@
 <?php
 
-  include('utils/_vars.php');
+  require('utils/_vars.php');
+  require('utils/_db.php');
 
   session_start();
 
@@ -103,9 +104,9 @@
                 }
                 
                 //Obter os dados da API
-                $valor = file_get_contents("api/files/".$nome."/valor.txt");
-                $hora = file_get_contents("api/files/".$nome."/hora.txt");
-                $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
+                $valor = get_info_db($nome, "valor", $con);
+                $hora = get_info_db($nome, "hora", $con);
+                $descricao = get_info_db($nome, "descricao", $con);
                 
                 $icon = $sensor["icon"];
 
@@ -186,9 +187,9 @@
                 }
                 
                 //Obter os dados da API
-                $valor = file_get_contents("api/files/".$nome."/valor.txt");
-                $hora = file_get_contents("api/files/".$nome."/hora.txt");
-                $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
+                $valor = get_info_db($nome, "valor", $con);
+                $hora = get_info_db($nome, "hora", $con);
+                $descricao = get_info_db($nome, "descricao", $con);
                 
                 $icon = $toggle["valores"][$valor];
 

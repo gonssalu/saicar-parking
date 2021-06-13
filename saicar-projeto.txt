@@ -52,4 +52,4 @@ falar dos problemas de segurança
 2 - Vigilante: acesso a tudo do utilizador normal e à câmara de segurança
 3 - Administrador: acesso a tudo do vigilante e ao painel de controlo
 
-falar da camara do android
+falar da camara do android // bilbiotecas Python

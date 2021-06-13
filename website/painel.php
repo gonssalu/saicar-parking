@@ -1,6 +1,7 @@
 <?php
 
-  include('utils/_vars.php');
+  require('utils/_vars.php');
+  require('utils/_db.php');
 
   session_start();
 
@@ -97,9 +98,9 @@
                             foreach ($toggles as $nome => $toggle){
                                 if($nome=="aspersor")
                                     continue;
-                                $descricao = file_get_contents("api/files/".$nome."/descricao.txt");
+                                $descricao = get_info_db($nome, "descricao", $con);
                                 
-                                $estado = file_get_contents("http://127.0.0.1/api/api.php?nome=".$nome);
+                                $estado = get_info_db($nome, "valor", $con);
 
                                 echo '<tr><td>'.$descricao.'</td><td>'.$estado.'</td>';
 

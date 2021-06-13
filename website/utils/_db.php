@@ -51,3 +51,37 @@ function login($user, $pass, $con){
       return 0; //quando tudo corre bem retornar 0
   }
 }
+
+//Obter um campo de um dispositivo com um certo nome
+function get_info_db($nome, $campo, $con){
+  $sql = 'SELECT '.$campo.' FROM dispositivos WHERE nome="'.$nome.'";';
+  $result = mysqli_query($con, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $camp = $row[$campo];
+
+  return $camp;
+}
+
+//Alterar o valor do campo de um dispositivo com um certo nome
+function put_info_db($nome, $campo, $valor_campo, $con){
+  $sql = 'UPDATE dispositivos SET '.$campo.'="'.$valor_campo.'" WHERE nome="'.$nome.'";';
+  $result = mysqli_query($con, $sql);
+  echo $sql;
+  return $result;
+}
+
+//Check if there is a sensor/toggle with that name
+function check_if_exists($nome, $con){
+  $sql = 'SELECT id FROM dispositivos WHERE nome="'.$nome.'";';
+  $result = mysqli_query($con, $sql);
+
+  return (mysqli_num_rows($result) > 0);
+}
+
+function add_log($nome, $valor, $hora, $con){
+  $id = get_info_db($nome, "id", $con);
+  $sql = 'INSERT INTO logs (id, id_disp, valor, hora)
+  VALUES (NULL, '.$id.', "'.$valor.'", "'.$hora.'")';
+
+  return mysqli_query($con, $sql);
+}
