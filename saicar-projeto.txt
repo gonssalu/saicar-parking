@@ -51,3 +51,5 @@ falar dos problemas de segurança
 1 - Utilizador normal: acesso aos Sensores e Atuadores, Historico
 2 - Vigilante: acesso a tudo do utilizador normal e à câmara de segurança
 3 - Administrador: acesso a tudo do vigilante e ao painel de controlo
+
+falar da camara do android
