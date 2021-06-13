@@ -48,6 +48,6 @@ explicar as variaveis das arrays
 explicar as permissoes
 falar dos problemas de segurança
 
-1 - Utilizador normal: acesso aos Sensores e Atuadores
+1 - Utilizador normal: acesso aos Sensores e Atuadores, Historico
 2 - Vigilante: acesso a tudo do utilizador normal e à câmara de segurança
-8 - Administrador: acesso a tudo do vigilante e ao painel de controlo
+3 - Administrador: acesso a tudo do vigilante e ao painel de controlo

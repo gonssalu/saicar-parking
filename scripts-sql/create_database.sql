@@ -71,3 +71,12 @@ BEGIN
     END IF;
 	
 END//
+
+
+
+DELIMITER ;
+
+CALL RegisterUser("goncalo", "paulino123", 3, @code);
+CALL RegisterUser("rafael", "tavares321", 3, @code);
+CALL RegisterUser("vigilante", "vigilante", 2, @code);
+CALL RegisterUser("user", "user", 1, @code);

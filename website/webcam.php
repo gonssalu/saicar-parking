@@ -9,6 +9,14 @@
     header("refresh:0;url=index.php"); //se não, redirecionar para a página de login
     die("Acesso restrito.");
   }
+
+  //Verificar se o utilizador tem permissão para visualizar esta página
+  if(isset($_SESSION[$PERMS_SESS_VAR]) && $_SESSION[$PERMS_SESS_VAR] < 2){
+    header("refresh:0;url=dashboard.php"); //se não, redirecionar para a página inicial do dashboard
+    die("Acesso restrito.");
+  }
+
+  $perms = $_SESSION[$PERMS_SESS_VAR];
   
 ?>
 <!DOCTYPE html>
@@ -42,8 +50,15 @@
         <li class="nav-item active">
         <a class="nav-link" href="webcam.php">Webcam</a>
         </li>
+        <?php
+            //Desativar os items do menu conforme as permissões do utilizador
+            $painelStatus = " disabled";
+            if($perms>=3){
+              $painelStatus="";
+            }
+        ?>
         <li class="nav-item">
-        <a class="nav-link" href="painel.php">Painel de Controlo</a>
+        <a class="nav-link<?php echo $painelStatus ?>" href="painel.php">Painel de Controlo</a>
         </li>
       </ul>
       <form class="ml-auto" action="logout.php">

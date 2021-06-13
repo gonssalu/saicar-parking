@@ -81,12 +81,26 @@
             <li class="nav-item active">
             <a class="nav-link" href="historico.php">Histórico</a>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="webcam.php">Webcam</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="painel.php">Painel de Controlo</a>
-            </li>
+            <?php
+            //Desativar os items do menu conforme as permissões do utilizador
+            $camStatus = " disabled";
+            $painelStatus = " disabled";
+            if(isset($_SESSION[$PERMS_SESS_VAR])){
+              $perms = $_SESSION[$PERMS_SESS_VAR];
+              if($perms>=3){
+                $painelStatus="";
+                $camStatus="";
+              }else if($perms==2){
+                $camStatus="";
+              }
+            }
+          ?>
+          <li class="nav-item">
+          <a class="nav-link<?php echo $camStatus ?>" href="webcam.php">Webcam</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link<?php echo $painelStatus ?>" href="painel.php">Painel de Controlo</a>
+          </li>
         </ul>
         <form class="ml-auto" action="logout.php">
             <button class="btn btn-outline-light float-right" id="btnLogout" type="submit"><i class="fas fa-sign-out-alt"></i></button>
@@ -100,7 +114,7 @@
                 $desc = file_get_contents("api/files/$nome/descricao.txt");
                 echo $desc;
             }else{
-                echo "todos os sensores/toggles.";
+                echo "todos os sensores/atuadores.";
             }
         ?></p>
     </div>

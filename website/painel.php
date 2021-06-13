@@ -10,6 +10,12 @@
     die("Acesso restrito.");
   }
 
+  //Verificar se o utilizador tem permissão para visualizar esta página
+  if(isset($_SESSION[$PERMS_SESS_VAR]) && $_SESSION[$PERMS_SESS_VAR] < 3){
+    header("refresh:0;url=dashboard.php"); //se não, redirecionar para a página inicial do dashboard
+    die("Acesso restrito.");
+  }
+
   //Informar a API da alteração
   $erro=false;
   if(isset($_POST['toggle']) && isset($_POST['state'])){
