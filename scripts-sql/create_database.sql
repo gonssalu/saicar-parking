@@ -6,8 +6,8 @@ USE saicar;
 CREATE TABLE users (
     id SMALLINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(32) NOT NULL unique,
-    password_hash BINARY(144) NOT NULL,
-    permissions TINYINT NOT NULL,
+    password_hash VARCHAR(128) NOT NULL,
+    perms TINYINT NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -61,12 +61,12 @@ Output:
 		0 - registo com sucesso
 		1 - esse utilizador já existe
 */
-CREATE PROCEDURE RegisterUser(pUsername VARCHAR(32), pPassword VARCHAR(50), OUT code TINYINT)
+CREATE PROCEDURE RegisterUser(pUsername VARCHAR(32), pPassword VARCHAR(50), pPerms TINYINT, OUT code TINYINT)
 BEGIN
     SET code=1;
 	IF (SELECT COUNT(*) FROM users WHERE username=pUsername) = 0 THEN
-		INSERT INTO users (username, password_hash, permissions)
-			VALUES(pUsername, SHA2(pPassword,512), 1);
+		INSERT INTO users (username, password_hash, perms)
+			VALUES(pUsername, SHA2(pPassword,512), pPerms);
         SET code=0;
     END IF;
 	

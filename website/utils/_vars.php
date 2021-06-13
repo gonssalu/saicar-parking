@@ -2,15 +2,11 @@
 
 date_default_timezone_set("Europe/Lisbon");
 
-$LOGIN_SESS_VAR = "2201798-2201803_username"; //para impedir problemas ao testar o website decidimos alterar o nome da session variable para que fosse unico
-$LOTACAO_MAX = 60; //Máximo de lotação para ser utilizado como simbolo
+$PREFIX_VAR = "2201798-2201803_";//para impedir problemas ao testar o website decidimos alterar o nome da session variable para que fosse unico
+$LOGIN_SESS_VAR = $PREFIX_VAR."username"; 
+$PERMS_SESS_VAR = $PREFIX_VAR."perms"; 
 
-//Array com todos os utilizadores e os seus dados de login
-$users=array(
-    "goncalo" => "paulino123",
-    "rafael" => "tavares321",
-    "user" => "user"
-);
+$LOTACAO_MAX = 60; //Máximo de lotação para ser utilizado como simbolo
 
 //Array com todos os sensores
 $sensores = array(

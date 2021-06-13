@@ -1,6 +1,7 @@
 <?php
 
-    include('utils/_vars.php');
+    require('utils/_vars.php');
+    require('utils/_db.php');
 
     session_start();
 
@@ -30,10 +31,8 @@
             <?php
                 //Processar a tentativa de login
                 if(isset($_POST['username']) && isset($_POST['password'])){
-                    //Verificar se o utilizador está no array e se a password está correta
-                    if(array_key_exists($_POST['username'],$users) && $users[$_POST['username']]==$_POST['password']){
-                        //Definir a variável de sessão com o nome de utilizador
-                        $_SESSION[$LOGIN_SESS_VAR]=$_POST['username'];
+                    //Efetuar o login na base de dados
+                    if(!login($_POST['username'], $_POST['password'], $con)){
                         //Mostrar o alerta de sucesso
                         echo '
                     <div class="alert alert-success">
