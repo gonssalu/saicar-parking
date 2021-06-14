@@ -1,6 +1,7 @@
 <?php
 
-  include('utils/_vars.php');
+  require('utils/_vars.php');
+  require('utils/_db.php');
 
   session_start();
 
@@ -108,7 +109,7 @@
     $colorBtnEn = false;
 
     if($signal){
-      $modo = file_get_contents("api/files/webcam/modo.txt");
+      $modo = get_cam_mode($con);
 
       //Ativar o botão do modo oposto ao que está ativo
       if($modo==0)

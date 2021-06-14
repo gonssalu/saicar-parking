@@ -53,3 +53,5 @@ falar dos problemas de segurança
 3 - Administrador: acesso a tudo do vigilante e ao painel de controlo
 
 falar da camara do android // bilbiotecas Python
+
+explicar o key_string nas camsettings

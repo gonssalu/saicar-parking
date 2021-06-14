@@ -66,7 +66,6 @@ function get_info_db($nome, $campo, $con){
 function put_info_db($nome, $campo, $valor_campo, $con){
   $sql = 'UPDATE dispositivos SET '.$campo.'="'.$valor_campo.'" WHERE nome="'.$nome.'";';
   $result = mysqli_query($con, $sql);
-  echo $sql;
   return $result;
 }
 
@@ -105,4 +104,21 @@ function get_history($nome, $con){
   }
 
   return $logs;
+}
+
+//Obter o modo da webcam
+function get_cam_mode($con){
+  $sql = 'SELECT value_str FROM cam_settings WHERE key_str="modo";';
+  $result = mysqli_query($con, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $camp = $row["value_str"];
+
+  return $camp;
+}
+
+//Definir o modo da webcam
+function set_cam_mode($modo, $con){
+  $sql = 'UPDATE cam_settings SET value_str=\''.$modo.'\' WHERE key_str="modo";';
+  $result = mysqli_query($con, $sql);
+  return $result;
 }

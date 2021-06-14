@@ -43,8 +43,10 @@ if($_SERVER['REQUEST_METHOD']!='POST'){
         exit("Método nao permitido");
     }
 
+    require('../utils/_db.php');
+
     //é um GET, ou seja é para obter o modo da camera
-    echo file_get_contents("files/webcam/modo.txt");    
+    echo get_cam_mode($con);    
 
     return;
 }
@@ -53,11 +55,13 @@ if($_SERVER['REQUEST_METHOD']!='POST'){
 if(isset($_POST['modo'])){
     header('Location: ../webcam.php');
 
+    require('../utils/_db.php');
+
     //Para ter a certeza que valores incorretos não são enviados
     if($_POST['modo']==0){
-        file_put_contents("files/webcam/modo.txt", "0");
+        set_cam_mode(0, $con);
     }else{
-        file_put_contents("files/webcam/modo.txt", "1");
+        set_cam_mode(1, $con);
     }
     return;
 }

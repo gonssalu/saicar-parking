@@ -32,7 +32,12 @@ CREATE TABLE logs (
     FOREIGN KEY(id_disp) REFERENCES dispositivos(id)
 );
 
-
+/* definições da camara */
+CREATE TABLE cam_settings (
+    key_str VARCHAR(16) NOT NULL,
+    value_str VARCHAR(16) NOT NULL,
+    PRIMARY KEY(key_str)
+);
 
 DELIMITER //
 
@@ -106,3 +111,5 @@ INSERT INTO `logs` VALUES (NULL, 8, '20', '2021/06/11 19:12');
 INSERT INTO `logs` VALUES (NULL, 9, 'OFF', '2021/06/11 19:12');
 INSERT INTO `logs` VALUES (NULL, 10, 'ABERTO', '2021/06/11 19:12');
 INSERT INTO `logs` VALUES (NULL, 11, '-0.49', '2021/06/11 19:12');
+
+INSERT INTO `cam_settings` VALUES ('modo', '1');
