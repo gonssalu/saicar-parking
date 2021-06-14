@@ -24,7 +24,7 @@ CREATE TABLE dispositivos (
 
 /* sensores e atuadores */
 CREATE TABLE logs (
-    id TINYINT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     id_disp TINYINT NOT NULL,
     valor VARCHAR(16) NOT NULL,
     hora VARCHAR(64) NOT NULL,

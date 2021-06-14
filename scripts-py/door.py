@@ -25,11 +25,11 @@ try:
             if tecla == 48: #48 é o ascii de 0
                 dados = {'nome': 'portao' , 'valor': "FECHADO"}
                 send_to_api(dados)
-                print ( "\nPorta foi fechada" )
+                print ( "\nPortão foi fechado" )
             elif tecla == 49: #49 é o ascii de 1
                 dados = {'nome': 'portao' , 'valor': "ABERTO"}
                 send_to_api(dados)
-                print ( "\nPorta foi aberta" )
+                print ( "\nPortão foi aberto" )
             else:
                 print( "\nOpção inválida" + tecla)
 

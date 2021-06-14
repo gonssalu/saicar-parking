@@ -26,13 +26,17 @@ CO2 alarm: 10.000ppm (1%) / 7.000 ppm 0,7%
 CO alarm: 70ppm (0,007%) / 50ppm 0,005%
 
 AC:
-	Reduces temperature by 10c per hour, and humidity by 2%
+	Reduces temperature by 3c per hour, and humidity by 2%
 
 Portao:
 	Renova o ar, com impacto maximo de 4%
 
 Heating element:
-	Increases temperature by 10c per hour, and decreases humidity by 2%
+	Increases temperature by 1c per hour, and decreases humidity by 2%
+
+	carro:
+	 co2 2%
+	 co 1%
 
 SBU: Quando controlam MCU
 
