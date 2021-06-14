@@ -1,6 +1,7 @@
 <?php
 
-    include('utils/_vars.php');
+    require('utils/_vars.php');
+    require('utils/_db.php');
 
     session_start();
 
@@ -37,19 +38,19 @@
     }
 
     //Percorrer todos os elementos de uma das arrays predefinidas.
-    function percorrerArrayElementos($arraye, $ARRAYSENSORES) {
+    function percorrerArrayElementos($arraye, $con) {
         //Percorrer todos os sensores
         foreach($arraye as $nome => $elemento){
             $log = file_get_contents("api/files/$nome/log.txt");
-            $desc = file_get_contents("api/files/$nome/descricao.txt");
-            $simbolo = (array_key_exists($nome, $ARRAYSENSORES) ? $elemento['simbolo'] : ""); //determinar que simbolo utilizar, caso seja um toggle não utilizar nenhum
+            $desc = get_info_db($nome, "descricao", $con);
+            $simbolo = (!check_if_toggle($nome, $con) ? $elemento['simbolo'] : ""); //determinar que simbolo utilizar, caso seja um toggle não utilizar nenhum
 
             mostrarRegistos($log, $desc, $simbolo, true); //Mostrar todos os registos com a coluna extra
         }
     }
   
     //Verificar se o parametro nome está definido e se existe um sensor/toggle com esse nome.
-    $existeNome = (isset($_GET['nome']) && (array_key_exists($_GET['nome'], $sensores) || array_key_exists($_GET['nome'], $toggles)));
+    $existeNome = (isset($_GET['nome']) && check_if_exists($_GET['nome'], $con));
     if($existeNome)
         $nome=$_GET['nome'];
 ?>
@@ -111,7 +112,7 @@
         <p>Está visualizando o histórico de <?php 
             //Caso um nome tenha sido definido, mostrar a designação do mesmo, se não mostrar o texto do histórico geral
             if($existeNome){
-                $desc = file_get_contents("api/files/$nome/descricao.txt");
+                $desc = get_info_db($nome, "descricao", $con);
                 echo $desc;
             }else{
                 echo "todos os sensores/atuadores.";
@@ -139,8 +140,8 @@
                         <tbody>';
                                 
                                 //Percorrer ambas as arrays e mostrar o histórico de todos os elementos
-                                percorrerArrayElementos($sensores, $sensores);
-                                percorrerArrayElementos($toggles, $sensores);
+                                percorrerArrayElementos($sensores, $con);
+                                percorrerArrayElementos($toggles, $con);
                                 
                             }else{
                                 //Um nome de toggle/sensor válido foi definido
@@ -156,7 +157,7 @@
                         <tbody>';
 
                                 //o $nome já foi definido no início da página
-                                $simbolo = (array_key_exists($nome, $sensores) ? $sensores[$nome]['simbolo'] : ""); //determinar que simbolo utilizar
+                                $simbolo = (!check_if_toggle($nome, $con) ? $sensores[$nome]['simbolo'] : ""); //determinar que simbolo utilizar
                                 $log = file_get_contents("api/files/$nome/log.txt");
 
                                 mostrarRegistos($log, $desc, $simbolo, false); //Mostrar os registos para este ficheiro de logs, sem a coluna extra
@@ -171,7 +172,7 @@
             //Caso seja o histórico individual inserir um botão de voltar atrás
             if($existeNome){
                 $extra = "";
-                if(array_key_exists($nome, $toggles))
+                if(check_if_toggle($nome, $con))
                     $extra = "atuadores";
 
                 echo '<div class="row">

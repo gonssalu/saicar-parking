@@ -70,7 +70,7 @@ function put_info_db($nome, $campo, $valor_campo, $con){
   return $result;
 }
 
-//Check if there is a sensor/toggle with that name
+//Verificar se existe um sensor ou atuador com esse nome
 function check_if_exists($nome, $con){
   $sql = 'SELECT id FROM dispositivos WHERE nome="'.$nome.'";';
   $result = mysqli_query($con, $sql);
@@ -78,10 +78,16 @@ function check_if_exists($nome, $con){
   return (mysqli_num_rows($result) > 0);
 }
 
+//Adicionar um log
 function add_log($nome, $valor, $hora, $con){
   $id = get_info_db($nome, "id", $con);
   $sql = 'INSERT INTO logs (id, id_disp, valor, hora)
   VALUES (NULL, '.$id.', "'.$valor.'", "'.$hora.'")';
 
   return mysqli_query($con, $sql);
+}
+
+//Verificar se um dispositivo é um atuador
+function check_if_toggle($nome, $con){
+  return get_info_db($nome, "e_atuador", $con);
 }
