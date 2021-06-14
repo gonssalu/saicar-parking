@@ -41,6 +41,4 @@ function loop() {
 		//postToAPI("sprinkler", value);
 		lastAPIUpdate=dateNow;
 	}
-
-	//TODO: Sprinkler controlo do dashboard
 }
