@@ -113,7 +113,13 @@
                                 </button>
                                 <div class="dropdown-menu">';
                                 foreach ($toggle["valores"] as $key => $value){
-                                    echo '<li onclick="$(\'#toggle'.$nome.'\').val(\''.$nome.'\'); $(\'#state'.$nome.'\').val(\''.$key.'\'); $(\'#form'.$nome.'\').submit()"><a class="dropdown-item" href="#">'.$key.'</a></li>';
+                                    $ativado=0;
+                                    if($key==$estado)
+                                        $ativado=1;
+
+                                    $onclick = ($ativado==1?'':'onclick="$(\'#toggle'.$nome.'\').val(\''.$nome.'\'); $(\'#state'.$nome.'\').val(\''.$key.'\'); $(\'#form'.$nome.'\').submit()"');
+                                    $strDisabled = ($ativado==1?' disabled':'');
+                                    echo '<li '.$onclick.'><a class="dropdown-item'.$strDisabled.'" href="#">'.$key.'</a></li>';
                                 }
                                 echo '</div>
                                 </div></form></td>';
