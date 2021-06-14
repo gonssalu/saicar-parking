@@ -41,7 +41,7 @@
     function percorrerArrayElementos($arraye, $con) {
         //Percorrer todos os sensores
         foreach($arraye as $nome => $elemento){
-            $log = file_get_contents("api/files/$nome/log.txt");
+            $log = get_history($nome, $con);
             $desc = get_info_db($nome, "descricao", $con);
             $simbolo = (!check_if_toggle($nome, $con) ? $elemento['simbolo'] : ""); //determinar que simbolo utilizar, caso seja um toggle não utilizar nenhum
 
@@ -158,7 +158,7 @@
 
                                 //o $nome já foi definido no início da página
                                 $simbolo = (!check_if_toggle($nome, $con) ? $sensores[$nome]['simbolo'] : ""); //determinar que simbolo utilizar
-                                $log = file_get_contents("api/files/$nome/log.txt");
+                                $log = get_history($nome, $con);
 
                                 mostrarRegistos($log, $desc, $simbolo, false); //Mostrar os registos para este ficheiro de logs, sem a coluna extra
                             }                          

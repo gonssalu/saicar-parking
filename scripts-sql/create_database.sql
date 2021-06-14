@@ -85,7 +85,7 @@ CALL RegisterUser("user", "user", 1, @code);
 
 INSERT INTO `dispositivos`VALUES (NULL, 'aquecimento', 'Aquecimento', 'OFF', '2021/06/11 19:12', 1);
 INSERT INTO `dispositivos`VALUES (NULL, 'ar_condicionado', 'Ar Condicionado', 'BAIXO', '2021/06/11 19:12', 1);
-INSERT INTO `dispositivos` VALUES (NULL, 'aspersor', 'Aquecimento', 'OFF', '2021/06/11 19:12', 1);
+INSERT INTO `dispositivos` VALUES (NULL, 'aspersor', 'Aspersor de Incêndio', 'OFF', '2021/06/11 19:12', 1);
 INSERT INTO `dispositivos` VALUES (NULL, 'co', 'Monóxido de Carbono', '0', '2021/06/11 19:12', 0);
 INSERT INTO `dispositivos` VALUES (NULL, 'co2', 'Poluição (CO<sub>2</sub>)', '360', '2021/06/11 19:12', 0);
 INSERT INTO `dispositivos` VALUES (NULL, 'fogo', 'Fogo', 'NÃO', '2021/06/11 19:12', 0);
@@ -94,3 +94,15 @@ INSERT INTO `dispositivos` VALUES (NULL, 'lotacao', 'Lotação', '20', '2021/06/
 INSERT INTO `dispositivos` VALUES (NULL, 'luz', 'Luz', 'OFF', '2021/06/11 19:12', 1);
 INSERT INTO `dispositivos` VALUES (NULL, 'portao', 'Portão', 'ABERTO', '2021/06/11 19:12', 1);
 INSERT INTO `dispositivos` VALUES (NULL, 'temperatura', 'Temperatura', '-0.49', '2021/06/11 19:12', 0);
+
+INSERT INTO `logs` VALUES (NULL, 1, 'OFF', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 2, 'BAIXO', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 3, 'OFF', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 4, '0', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 5, '360', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 6, 'NÃO', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 7, '79.0', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 8, '20', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 9, 'OFF', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 10, 'ABERTO', '2021/06/11 19:12');
+INSERT INTO `logs` VALUES (NULL, 11, '-0.49', '2021/06/11 19:12');

@@ -80,7 +80,7 @@ function check_if_exists($nome, $con){
 
 //Adicionar um log
 function add_log($nome, $valor, $hora, $con){
-  $id = get_info_db($nome, "id", $con);
+  $id = get_info_db($nome, "id", $con); //obter o id
   $sql = 'INSERT INTO logs (id, id_disp, valor, hora)
   VALUES (NULL, '.$id.', "'.$valor.'", "'.$hora.'")';
 
@@ -90,4 +90,19 @@ function add_log($nome, $valor, $hora, $con){
 //Verificar se um dispositivo é um atuador
 function check_if_toggle($nome, $con){
   return get_info_db($nome, "e_atuador", $con);
+}
+
+//Buscar o historico e pô-lo num string
+function get_history($nome, $con){
+  $id = get_info_db($nome, "id", $con);
+  $sql = "SELECT valor, hora FROM logs WHERE id_disp=" . $id . ";";
+  $result = mysqli_query($con, $sql);
+  
+  $logs=""; //guardar todos os logs num string para serem processados mais tarde
+  //percorrer cada registo
+  while($row = mysqli_fetch_assoc($result)) {
+    $logs.=$row['hora'].';'.$row['valor']."\n";
+  }
+
+  return $logs;
 }
