@@ -18,7 +18,7 @@ def send_to_api(dados):
         print (req.status_code)
 
 try:
-    print("Usage:\n[0]Fecha a porta\n[1]Abre a porta\n[CTRL+C]Terminar")
+    print("Usage:\n[0]Fecha o portão\n[1]Abre o portão\n[CTRL+C]Terminar")
     while True:
         if kbhit():
             tecla = getch()[0]
